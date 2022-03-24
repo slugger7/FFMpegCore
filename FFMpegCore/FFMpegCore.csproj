@@ -14,7 +14,7 @@
 - Support for adding metadata (thanks Weirdo)
 - Automatically escape single quotes in filenames for DemuxConcatArgument (thanks JKamsker)</PackageReleaseNotes>
     <LangVersion>8</LangVersion>
-    <PackageVersion>4.7.0</PackageVersion>
+    <PackageVersion>4.7.1</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>Malte Rosenbjerg, Vlad Jerca, Max Bagryantsev</Authors>
     <PackageTags>ffmpeg ffprobe convert video audio mediafile resize analyze muxing</PackageTags>
@@ -33,7 +33,6 @@
 
   <ItemGroup>
     <PackageReference Include="Instances" Version="2.0.0" />
-    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
     <PackageReference Include="System.Text.Json" Version="6.0.2" />
   </ItemGroup>
 

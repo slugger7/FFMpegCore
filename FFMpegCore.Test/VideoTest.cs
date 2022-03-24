@@ -13,6 +13,7 @@ using FFMpegCore.Arguments;
 using FFMpegCore.Exceptions;
 using FFMpegCore.Pipes;
 using System.Threading;
+using FFMpegCore.Extensions.System.Drawing.Common;
 
 namespace FFMpegCore.Test
 {
@@ -410,7 +411,7 @@ namespace FFMpegCore.Test
         public void Video_Snapshot_InMemory()
         {
             var input = FFProbe.Analyse(TestResources.Mp4Video);
-            using var bitmap = FFMpeg.Snapshot(TestResources.Mp4Video);
+            using var bitmap = FFMpegImage.Snapshot(TestResources.Mp4Video);
             
             Assert.AreEqual(input.PrimaryVideoStream!.Width, bitmap.Width);
             Assert.AreEqual(input.PrimaryVideoStream.Height, bitmap.Height);
@@ -469,7 +470,7 @@ namespace FFMpegCore.Test
                 });
 
             var outputFile = new TemporaryFile("out.mp4");
-            var success = FFMpeg.JoinImageSequence(outputFile, images: imageSet.ToArray());
+            var success = FFMpegImage.JoinImageSequence(outputFile, images: imageSet.ToArray());
             Assert.IsTrue(success);
             var result = FFProbe.Analyse(outputFile);
             Assert.AreEqual(3, result.Duration.Seconds);
