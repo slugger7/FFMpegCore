@@ -265,6 +265,40 @@ namespace FFMpegCore
                     .UsingShortest())
                 .ProcessSynchronously();
         }
+
+        /// <summary>
+        ///     Cuts a chunk out of a video and saves it to a file
+        /// </summary>
+        /// <param name="input">Input video file.</param>
+        /// <param name="output">Output video file.</param>
+        /// <param name="startTime">Time to start at</param>
+        /// <param name="endTime">Time to end at</param>
+
+        public static bool Cut(string input, string output, TimeSpan? startTime, TimeSpan? endTime)
+        {
+            var (arguments, outputOptions) = CutOptions(input, startTime, endTime);
+            return arguments
+                .OutputToFile(output, true, outputOptions)
+                .ProcessSynchronously();
+        }
+        public static async Task<bool> CutAsync(string input, string output, TimeSpan? startTime, TimeSpan? endTime)
+        {
+            var (arguments, outputOptions) = CutOptions(input, startTime, endTime);
+            return await arguments
+                .OutputToFile(output, true, outputOptions)
+                .ProcessAsynchronously();
+        }
+
+        private static (FFMpegArguments, Action<FFMpegArgumentOptions> outputOptions) CutOptions(string input, TimeSpan? startTime, TimeSpan? endTime)
+        {
+            return (FFMpegArguments
+                .FromFileInput(input, true, options => options
+                    .Seek(startTime)
+                    .EndSeek(endTime)),
+                options => options
+                    .CopyChannel()
+            );
+        }
         
         /// <summary>
         ///     Joins a list of video files.
